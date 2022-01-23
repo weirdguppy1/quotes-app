@@ -17,7 +17,7 @@ export default function Home() {
       </Head>
 
       <div className="flex flex-col items-center space-y-4">
-        <h1 class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br bright from-pink-400 to-tan transform-all transition duration-200 hover:brightness-125">
+        <h1 className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br bright from-pink-400 to-tan transform-all transition duration-200 hover:brightness-125">
           Quote App
         </h1>
         <p>Get your daily dose of inspiration. ❤️</p>
