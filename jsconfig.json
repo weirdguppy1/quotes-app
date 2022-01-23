@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/pages/*": ["pages/*"],
+      "@/lib/*": ["lib/*"],
+      "@/root/*": ["./*"],
+      "@/atoms/*": ["atoms/*"],
+      "@config": ["firebase.js"]
+    }
+  }
+}
