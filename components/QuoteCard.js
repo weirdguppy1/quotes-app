@@ -25,7 +25,7 @@ const QuoteCard = (props) => {
           </svg>
         </button>
       </div>
-      <p className="text-sm">"{content}"</p>
+      <p className="text-sm">&quot;{content}&quot;</p>
     </div>
   );
 };
