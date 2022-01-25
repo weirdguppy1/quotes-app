@@ -115,7 +115,7 @@ const SearchModal = () => {
                     <h2 className="text-sm text-black">No results.</h2>
                   ) : (
                     quotes.map((value) => {
-                        return <QuoteCard key={value._id} content={value.content} author={value.author} />
+                        return <QuoteCard key={value._id} id={value._id} content={value.content} author={value.author} />
                     })
                   )}
                 </div>

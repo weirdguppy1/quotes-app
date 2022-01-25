@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.3",
+    "@rehooks/local-storage": "^2.4.4",
     "@tippyjs/react": "^4.2.6",
     "axios": "^0.25.0",
     "heroicons": "^1.0.5",
