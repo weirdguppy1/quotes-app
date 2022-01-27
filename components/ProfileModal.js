@@ -1,34 +1,17 @@
 import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { modalOpenAtom } from "../atoms";
+import { modalOpenProfileAtom } from "../atoms";
 import { useAtom } from "jotai";
-import axios from "axios";
 import QuoteCard from "./QuoteCard";
+import useLocalStorage from "@rehooks/local-storage";
 
-const SearchModal = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isOpen, setOpen] = useAtom(modalOpenAtom);
-  const [quotes, setQuotes] = useState([]);
+const ProfileModal = () => {
+  const [isOpen, setOpenProfile] = useAtom(modalOpenProfileAtom);
+  const [quotes] = useLocalStorage("quotes:liked");
 
   function closeModal() {
-    setOpen(false);
+    setOpenProfile(false);
   }
-
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    if(searchTerm.trim() === "") return;
-    await axios
-      .get(`https://api.quotable.io/search/quotes?query=${searchTerm}`)
-      .then((res) => {
-        setQuotes(res.data.results);
-      });
-    setSearchTerm("");
-  };
-
-  const handleSearchChange = async (e) => {
-    e.preventDefault();
-    setSearchTerm(e.target.value);
-  };
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -70,7 +53,7 @@ const SearchModal = () => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Search For Quotes
+                  Your Quotes ❤️
                 </Dialog.Title>
                 <button
                   type="button"
@@ -93,39 +76,23 @@ const SearchModal = () => {
                   </svg>
                 </button>
               </div>
-              <div className="mt-2 flex flex-col items-center space-y-2">
-                <form
-                  onSubmit={handleSearch}
-                  className="flex flex-col space-y-2 w-full"
-                >
-                  <input
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    placeholder="Search for one term"
-                    className="border-2 rounded-lg p-2 focus:ring focus:ring-blue-400 focus:outline-none transform-all transition duration-250"
-                  />
-                  <button
-                    className="bg-gray-100 text-coca rounded py-2 px-3"
-                    type="submit"
-                  >
-                    Search 🔍
-                  </button>
-                </form>
+              <div className="mt-2 flex flex-col space-y-2">
                 <div className="flex flex-col items-start space-y-2">
-                  {quotes === [] ? (
-                    <h2 className="text-sm text-black">No results.</h2>
-                  ) : (
-                    quotes.map((value) => {
-                      return (
-                        <QuoteCard
-                          key={value._id}
-                          id={value._id}
-                          content={value.content}
-                          author={value.author}
-                        />
-                      );
-                    })
-                  )}
+                  {(() => {
+                    if (quotes) {
+                      return quotes.map((value) => {
+                        return (
+                          <QuoteCard
+                            key={value.id}
+                            id={value.id}
+                            content={value.content}
+                            author={value.author}
+                          />
+                        );
+                      });
+                    }
+                    return <h1>No liked quotes.</h1>
+                  })()}
                 </div>
               </div>
             </div>
@@ -136,4 +103,4 @@ const SearchModal = () => {
   );
 };
 
-export default SearchModal;
+export default ProfileModal;

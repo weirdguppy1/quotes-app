@@ -1,3 +1,6 @@
+import useLocalStorage from "@rehooks/local-storage";
+import { handleQuoteDislike, handleQuoteLike } from "../functions";
+
 export const FilledHeart = () => {
   return (
     <svg
@@ -31,5 +34,36 @@ export const OpenHeart = () => {
         d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
       />
     </svg>
+  );
+};
+
+export const HeartIcon = (props) => {
+  const { quote } = props;
+  const [likedQuotes] = useLocalStorage("quotes:liked");
+
+  return (
+    <>
+      {(() => {
+        if (likedQuotes == null) {
+          return (
+            <button onClick={() => handleQuoteLike(quote)}>
+              <OpenHeart />
+            </button>
+          );
+        } else if (likedQuotes.some((e) => e.id == quote.id)) {
+          return (
+            <button onClick={() => handleQuoteDislike(quote)}>
+              <FilledHeart />
+            </button>
+          );
+        } else {
+          return (
+            <button onClick={() => handleQuoteLike(quote)}>
+              <OpenHeart />
+            </button>
+          );
+        }
+      })()}
+    </>
   );
 };

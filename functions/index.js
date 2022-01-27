@@ -2,7 +2,7 @@ import { writeStorage } from "@rehooks/local-storage";
 
 export const handleQuoteLike = (likedQuote) => {
   let currentValue = JSON.parse(localStorage.getItem("quotes:liked"));
-
+  
   if (currentValue) {
     currentValue.push(likedQuote);
   } else {
